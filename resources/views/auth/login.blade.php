@@ -14,7 +14,7 @@
                                 <label for="mac" class="col-md-4 control-label">Mac Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="text" type="mac" class="form-control" name="mac" value="{{ $mac }}">
+                                    <input id="text" type="mac" class="form-control" name="mac" value="{{ $mac }}" readonly>
 
                                     @if ($errors->has('mac'))
                                         <span class="help-block">

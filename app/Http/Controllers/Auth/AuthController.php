@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+//use App\Http\Requests\Request;
 use App\User;
+use Auth;
+use DB;
+use Lang;
 use Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -56,6 +61,39 @@ class AuthController extends Controller
         }
 
         return view('auth.login', compact('mac'));
+    }
+
+    public function login(Request $request) {
+        $mac = $request->input('mac');
+        $user = DB::table('users')->where('mac', $mac)->first();
+
+        if(count($user)) {
+            Auth::attempt(['mac' => $mac]);
+
+            return redirect()->intended('home');
+        }
+        else {
+            /*return redirect()->intended('login')
+                ->withInput($request->only($this->loginUsername(), 'remember'))
+                ->withErrors([
+                    $this->loginUsername() => $this->getFailedLoginMessage(),
+                ]);*/
+
+            return redirect()->intended('register');
+        }
+    }
+
+    protected function getFailedLoginMessage()
+    {
+        return Lang::has('auth.failed')
+            ? Lang::get('auth.failed')
+            : 'These credentials do not match our records.';
+    }
+
+    public function loginUsername()
+    {
+//        return property_exists($this, 'username') ? $this->username : 'mac';
+        return 'mac';
     }
 
     public function showRegistrationForm()

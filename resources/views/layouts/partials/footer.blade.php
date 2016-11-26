@@ -1,4 +1,8 @@
-
+<div class="panel panel-default chat-panel-heading">
+    <div class="panel-heading" style="background-color: #ffffff;">
+        <b>Chat</b>
+    </div>
+</div>
 <footer class="footer boxscroll">
     <div class="container-fluid">
         <div class="row">
