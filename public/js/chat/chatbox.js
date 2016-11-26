@@ -3,15 +3,15 @@
 Vue.component('chat', {
     // template: '#chat-template',
 
-    data: function() {
+    /*data: function() {
         return {
             chatlist: []
         };
-    },
+    },*/
 
     ready: function () {
         // this.getData();
-        setInterval(this.ajax, 2000);
+        setInterval(this.ajax, 3000);
     },
 
     methods: {
@@ -43,7 +43,7 @@ new Vue({
     data: {
         chat: {
             body: '',
-            users_id: '',
+            username: '',
         }
     },
     
