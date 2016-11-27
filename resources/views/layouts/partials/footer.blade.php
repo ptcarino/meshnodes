@@ -23,7 +23,7 @@
                     <input type="hidden" name="username" value="{{ Auth::user()->name }}" required>
                 @endif
                 <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Send</button>
+                <button class="btn btn-default" type="submit">Send</button>
             </span>
             </div>
         </form>

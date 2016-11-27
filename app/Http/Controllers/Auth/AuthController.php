@@ -65,22 +65,23 @@ class AuthController extends Controller
 
     public function login(Request $request) {
         $mac = $request->input('mac');
-        $user = DB::table('users')->where('mac', $mac)->first();
+        $name = $request->input('name');
+//        $user = DB::table('users')->where('mac', $mac)->get();
+//        $user = DB::select('SELECT * FROM mn_users WHERE mac = "$mac"');
+        $user = User::where('mac', $mac)->where('name', $name)->first();
 
         if(count($user)) {
-            Auth::attempt(['mac' => $mac]);
+//            Auth::attempt(['name' => $name, 'mac' => $mac, $request->has('remember')]);
+            Auth::guard($this->getGuard())->attempt(['name' => $name, 'mac' => $mac], $request->has('remember'));
 
             return redirect()->intended('home');
+//            return dd($user);
         }
         else {
-            /*return redirect()->intended('login')
-                ->withInput($request->only($this->loginUsername(), 'remember'))
-                ->withErrors([
-                    $this->loginUsername() => $this->getFailedLoginMessage(),
-                ]);*/
-
-            return redirect()->intended('register');
+            return redirect('register')->with('name', $name);
         }
+
+//        return $user;
     }
 
     protected function getFailedLoginMessage()
@@ -93,7 +94,7 @@ class AuthController extends Controller
     public function loginUsername()
     {
 //        return property_exists($this, 'username') ? $this->username : 'mac';
-        return 'mac';
+        return 'name';
     }
 
     public function showRegistrationForm()
@@ -115,6 +116,11 @@ class AuthController extends Controller
         }*/
 
         return view('auth.register', compact('mac'));
+    }
+
+    protected function getGuard()
+    {
+        return property_exists($this, 'guard') ? $this->guard : null;
     }
 
     /**
@@ -139,6 +145,15 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $cluster   = Cassandra::cluster()->withContactPoints('172.17.0.2')->build();
+        $keyspace  = 'mesh';
+        $session   = $cluster->connect($keyspace);
+        $statement = new Cassandra\SimpleStatement(
+            "INSERT INTO chat (id, username, body, created_at) VALUES (cd609ead-7cae-4830-89c0-cdba47937396, '$name', '$msg', now())"
+        );
+        $future    = $session->executeAsync($statement);
+        $session->close();
+
         return User::create([
             'name' => $data['name'],
             'mac' => $data['mac']
