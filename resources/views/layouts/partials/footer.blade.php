@@ -21,6 +21,7 @@
                     <input type="hidden" name="username" value="" required>
                 @else
                     <input type="hidden" name="username" value="{{ Auth::user()->name }}" required>
+                    <input type="hidden" name="mac" value="{{ Auth::user()->mac }}" required>
                 @endif
                 <span class="input-group-btn">
                 <button class="btn btn-default" type="submit">Send</button>
@@ -29,3 +30,16 @@
         </form>
     </div>
 </footer>
+
+<template id="chat-template">
+    <div class="container-fluid">
+        <div class="row message-bubble" v-for="chat in chatlist">
+            <p class="text-muted"><strong>@{{ chat.username }}</strong> &nbsp;&nbsp;@{{ chat.created_at }}</p>
+            <span>@{{ chat.body }}</span>
+        </div>
+    </div>
+    {{--<div class="header" v-for="chat in chatlist">
+        <p class="text-muted"><strong>@{{ chat.username }}</strong> &nbsp;&nbsp;@{{ chat.created_at }}</p>
+        <span>@{{ chat.body }}</span>
+    </div><br>--}}
+</template>

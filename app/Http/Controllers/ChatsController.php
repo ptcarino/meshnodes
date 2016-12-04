@@ -24,12 +24,13 @@ class ChatsController extends Controller
     public function sendMessages() {
         $name = $_POST['username'];
         $msg = $_POST['body'];
+        $mac = $_POST['mac'];
 
-        $cluster   = Cassandra::cluster()->withContactPoints('172.17.0.2')->build();
+        $cluster   = Cassandra::cluster()->withContactPoints('192.168.11.4')->build();
         $keyspace  = 'mesh';
         $session   = $cluster->connect($keyspace);
         $statement = new Cassandra\SimpleStatement(
-            "INSERT INTO chat (id, username, body, created_at) VALUES (cd609ead-7cae-4830-89c0-cdba47937396, '$name', '$msg', now())"
+            "INSERT INTO chat (id, username, mac, body, created_at) VALUES (bbbcb63c-027e-427b-a6e5-b575a79de797, '$name', '$mac', '$msg', now())"
         );
         $future    = $session->executeAsync($statement);
         $session->close();

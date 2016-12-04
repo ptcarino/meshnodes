@@ -1,29 +1,34 @@
 // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
+Vue.http.options.crossOrigin = true;
 
 Vue.component('chat', {
-    // template: '#chat-template',
+    template: '#chat-template',
 
-    /*data: function() {
+    data: function() {
         return {
             chatlist: []
         };
-    },*/
-
-    ready: function () {
-        // this.getData();
-        setInterval(this.ajax, 3000);
     },
 
+    created: function () {
+        this.getData();
+    },
+
+    /*ready: function () {
+        // this.getData();
+        setInterval(this.ajax, 3000);
+    },*/
+
     methods: {
-        /*getData: function () {
-            this.$http.get('getMessages', function(chats) {
+        getData: function () {
+            this.$http.get('http://emesh.ddns.net/chatdata/', function(chats) {
                 this.chatlist = chats;
                 console.log(chats);
             }.bind(this));
             setTimeout(this.getData, 5000);
-        },*/
+        },
 
-        ajax: function () {
+        /*ajax: function () {
             var req = new XMLHttpRequest();
             req.onreadystatechange = function() {
                 if(req.readyState == 4 && req.status == 200) {
@@ -32,7 +37,7 @@ Vue.component('chat', {
             }
             req.open('GET','chatdata',true);
             req.send();
-        }
+        }*/
     }
 });
 

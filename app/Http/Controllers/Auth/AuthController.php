@@ -66,13 +66,19 @@ class AuthController extends Controller
     public function login(Request $request) {
         $mac = $request->input('mac');
         $name = $request->input('name');
-//        $user = DB::table('users')->where('mac', $mac)->get();
-//        $user = DB::select('SELECT * FROM mn_users WHERE mac = "$mac"');
         $user = User::where('mac', $mac)->where('name', $name)->first();
 
+        /*$cluster   = Cassandra::cluster()->withContactPoints('172.17.0.2')->build();
+        $keyspace  = 'mesh';
+
+        $session   = $cluster->connect($keyspace);
+        $statement = new Cassandra\SimpleStatement("SELECT * FROM users");
+        $future    = $session->executeAsync($statement);
+        $result    = $future->first();*/
+
         if(count($user)) {
-//            Auth::attempt(['name' => $name, 'mac' => $mac, $request->has('remember')]);
-            Auth::guard($this->getGuard())->attempt(['name' => $name, 'mac' => $mac], $request->has('remember'));
+            Auth::attempt(['name' => $name, 'mac' => $mac, $request->has('remember')]);
+//            Auth::guard($this->getGuard())->attempt(['name' => $name, 'mac' => $mac], $request->has('remember'));
 
             return redirect()->intended('home');
 //            return dd($user);
@@ -145,15 +151,6 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $cluster   = Cassandra::cluster()->withContactPoints('172.17.0.2')->build();
-        $keyspace  = 'mesh';
-        $session   = $cluster->connect($keyspace);
-        $statement = new Cassandra\SimpleStatement(
-            "INSERT INTO chat (id, username, body, created_at) VALUES (cd609ead-7cae-4830-89c0-cdba47937396, '$name', '$msg', now())"
-        );
-        $future    = $session->executeAsync($statement);
-        $session->close();
-
         return User::create([
             'name' => $data['name'],
             'mac' => $data['mac']
