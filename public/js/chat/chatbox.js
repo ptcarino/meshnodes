@@ -1,5 +1,6 @@
 // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
 Vue.http.options.crossOrigin = true;
+// Vue.http.headers.common['Access-Control-Allow-Origin'] = 'http://192.168.11.4:8888';
 
 Vue.component('chat', {
     template: '#chat-template',
@@ -21,7 +22,7 @@ Vue.component('chat', {
 
     methods: {
         getData: function () {
-            this.$http.get('http://emesh.ddns.net/chatdata/', function(chats) {
+            this.$http.get('http://192.168.11.4:8888/chatdata/', function(chats) {
                 this.chatlist = chats;
                 console.log(chats);
             }.bind(this));
@@ -47,7 +48,7 @@ new Vue({
 
     data: {
         chat: {
-            body: '',
+            message: '',
             username: '',
         }
     },

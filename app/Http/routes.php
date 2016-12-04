@@ -18,6 +18,9 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/forum', 'ForumsController@index');
+Route::get('/forum/rations-request', 'ForumsController@rations');
+Route::get('/forum/rescue-efforts', 'ForumsController@rescue');
 
-Route::get('chatdata', 'ChatsController@getMessages');
-Route::post('sendMessages', 'ChatsController@sendMessages');
+//Route::get('chatdata', 'ChatsController@getMessages');
+//Route::post('sendMessages', 'ChatsController@sendMessages');

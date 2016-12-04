@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
     <link rel="stylesheet" href="{{ asset('/css/chatbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/forum.css') }}">
 
     <!-- Styles -->
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">--}}
@@ -77,11 +78,11 @@
 
     @yield('content')
 
-    @if(Auth::guest())
+    {{--@if(Auth::guest())
         &nbsp;
     @else
         @include('layouts.partials.footer')
-    @endif
+    @endif--}}
 
     <!-- JavaScripts -->
     {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>--}}

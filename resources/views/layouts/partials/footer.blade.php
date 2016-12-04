@@ -16,7 +16,7 @@
     <div class="footer-panel-footer">
         <form method="POST" action="http://192.168.11.4/chatdata" id="formchat">
             <div class="input-group" id="chatform">
-                <input type="text" id="chatinput" name="body" class="form-control">
+                <input type="text" id="chatinput" name="message" class="form-control">
                 @if(Auth::guest())
                     <input type="hidden" name="username" value="" required>
                 @else
